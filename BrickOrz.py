@@ -1,6 +1,7 @@
 import discord
 import random
 import re
+from dtoken import BOT_TOKEN
 
 class MyClient(discord.Client):
     async def on_ready(self):
