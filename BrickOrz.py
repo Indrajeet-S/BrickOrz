@@ -18,8 +18,12 @@ client = MyClient(intents=intents)
 @client.event
 
 async def on_message(message):
+    # Ignore all bots
+    if message.author.bot:
+        return
+    
     # 1) Adding random welcome reaction emojis to each message in a particular channel 
-    if message.channel.id == 1191356341885878302 and not message.author.bot:
+    if message.channel.id == 1191356341885878302:
         emojis = ['<:blobbeat:1206994557137326110>', '\<:catKing:1206994563567452220>', '<:AC:1206994544306954313>', '<:ghosthug:1206994583578349598>', '\<:gigachad:1206994586636001281>', '\<:hype:1206994599885672519>', '\<:pkinglove:1206994630600818748>', '\<:prayge:1206994633305882686>', '<:proud:1206994636560670720>', '\<:redHandWin:1206994645016518656>', '\<:sir:1206994677644001361>', '\<:stickManLove:1206994683516157953>', '\<:yay:1206994703115886593>', '\<:yayy:1206994707020914719>', '\<:yesSir:1206994714570788874>', '👋'] # 16 emojis
         emoji = random.choice(emojis)
 
@@ -30,19 +34,18 @@ async def on_message(message):
 
 
     # 2) Reacting with "orz" emoji 
-    if not message.author.bot:  # Check if the message is not sent by a bot
-        # Check if "orz" is in the message content
-        if "orz" in message.content.lower():  # This makes it case-insensitive
-            custom_emoji = '<:orz:1206994621360504852>'
+    # Check if "orz" is in the message content
+    if "orz" in message.content.lower():  # This makes it case-insensitive
+        custom_emoji = '<:orz:1206994621360504852>'
             
-            try:
-                await message.add_reaction(custom_emoji)
-            except discord.HTTPException as e:
-                print(f"Failed to add reaction: {e}")
+        try:
+            await message.add_reaction(custom_emoji)
+        except discord.HTTPException as e:
+            print(f"Failed to add reaction: {e}")
 
 
     # 3) Reacting with "✅" to notification msgs 
-    if message.channel.id == 1206991455164440647 and not message.author.bot:
+    if message.channel.id == 1206991455164440647:
         try:
             await message.add_reaction('✅')  
         except discord.HTTPException as e:
