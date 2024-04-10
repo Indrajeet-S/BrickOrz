@@ -116,5 +116,17 @@ async def on_message(message):
             print(f"Failed to send message or log due to an HTTP exception: {e}")
 
 
+
+    ### 69 importance msg
+    if message.content == '!69':
+            youtube_url = '<https://youtu.be/B6_iQvaIjXw?si=LoF4q1b1T_Bfybnf>'  # Ariana Grande - 34+35 (official video)
+            # add two carets around the link, e.g. <https://youtu.be/B6_iQvaIjXw\>, and it'll stop being embedded on YT link
+            await message.channel.send("The number **69** is interesting!\n"
+                                        "Here's a fun fact: **(6*9)+6+9 = 69**\n"
+                                        "**[34 + 35](" + youtube_url + ") = 69**  \n"
+                                    )
+
+
+
 # Run the bot
 bot.run(BOT_TOKEN)
