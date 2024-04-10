@@ -32,7 +32,7 @@ async def on_message(message):
     if message.author.bot:
         return
     
-    print(f'Message from {message.author}: {message.content}')
+    # print(f'Message from {message.author}: {message.content}')
     
     # Add your logic for message reactions and other responses
 
