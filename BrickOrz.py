@@ -1,27 +1,41 @@
 import discord
+from discord.ext import commands
 import random
 import re
 from dtoken import BOT_TOKEN
 
-class MyClient(discord.Client):
-    async def on_ready(self):
-        print(f'Logged on as {self.user}!')
-
-    async def on_message(self, message):
-        print(f'Message from {message.author}: {message.content}')
-
+# Define which intents your bot requires
 intents = discord.Intents.default()
-intents.message_content = True
-client = MyClient(intents=intents)
+intents.messages = True  # Allows the bot to receive messages
+intents.message_content = True  # This is the crucial part for your warning
 
-# Brick Orz code
-@client.event
+# Initialize your bot with the specified intents
+bot = commands.Bot(command_prefix='/', intents=intents)
 
+@bot.event
+async def on_ready():
+    print(f'Logged on as {bot.user}!')
+
+@bot.command()
+async def testt(ctx):
+    """Responds with a simple message to show the command is working."""
+    await ctx.send('This is a test command!')
+
+# The rest of your event listeners can remain under this Bot instance
+@bot.event
 async def on_message(message):
-    # Ignore all bots
+    # Make sure to process commands, otherwise commands won't work.
+    await bot.process_commands(message)
+
+    # Your existing on_message code here
+    # Remember, the rest of your on_message logic goes here
     if message.author.bot:
         return
     
+    print(f'Message from {message.author}: {message.content}')
+    
+    # Add your logic for message reactions and other responses
+
     # 1) Adding random welcome reaction emojis to each message in a particular channel 
     if message.channel.id == 1191356341885878302:
         emojis = ['<:blobbeat:1206994557137326110>', '\<:catKing:1206994563567452220>', '<:AC:1206994544306954313>', '<:ghosthug:1206994583578349598>', '\<:gigachad:1206994586636001281>', '\<:hype:1206994599885672519>', '\<:pkinglove:1206994630600818748>', '\<:prayge:1206994633305882686>', '<:proud:1206994636560670720>', '\<:redHandWin:1206994645016518656>', '\<:sir:1206994677644001361>', '\<:stickManLove:1206994683516157953>', '\<:yay:1206994703115886593>', '\<:yayy:1206994707020914719>', '\<:yesSir:1206994714570788874>', '👋'] # 16 emojis
@@ -52,8 +66,7 @@ async def on_message(message):
             print(f"Failed to add reaction: {e}")
 
 
-    # 4) 
-    # Discord invite link pattern
+    # 4)  Discord invite link pattern
     DISCORD_INVITE_PATTERN = r'discord(?:\.gg|app\.com\/invite)\/[^\s\/]+?'
 
     # ID of the private channel where you want to log the invite links
@@ -66,7 +79,7 @@ async def on_message(message):
             await message.author.send(f"Hello {message.author.name}, 🚫 posting other Discord server invites is not allowed in '{message.guild.name}'! If the invite link is very important then you can send it to the respective person in DM & not here on the server 😳 ")
 
             # Log the details of the message in the designated private channel
-            log_channel = client.get_channel(LOG_CHANNEL_ID)
+            log_channel = bot.get_channel(LOG_CHANNEL_ID)
             if log_channel:
                 await log_channel.send(f"User {message.author} ({message.author.id}) posted a disallowed invite link in {message.channel}: {message.content}")
 
@@ -78,6 +91,5 @@ async def on_message(message):
             print(f"Failed to send message or log due to an HTTP exception: {e}")
 
 
-
-# Run the bot 
-client.run(BOT_TOKEN)
+# Run the bot
+bot.run(BOT_TOKEN)
