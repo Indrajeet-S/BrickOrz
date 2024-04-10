@@ -4,22 +4,27 @@ import random
 import re
 from dtoken import BOT_TOKEN
 
+
 # Define which intents your bot requires
 intents = discord.Intents.default()
 intents.messages = True  # Allows the bot to receive messages
 intents.message_content = True  # This is the crucial part for your warning
 
+
 # Initialize your bot with the specified intents
 bot = commands.Bot(command_prefix='/', intents=intents)
+
 
 @bot.event
 async def on_ready():
     print(f'Logged on as {bot.user}!')
 
+
 @bot.command()
 async def testt(ctx):
     """Responds with a simple message to show the command is working."""
     await ctx.send('This is a test command!')
+
 
 # The rest of your event listeners can remain under this Bot instance
 @bot.event
@@ -33,10 +38,9 @@ async def on_message(message):
         return
     
     # print(f'Message from {message.author}: {message.content}')
-    
     # Add your logic for message reactions and other responses
 
-    # 1) Adding random welcome reaction emojis to each message in a particular channel 
+    ### 1) Adding random welcome reaction emojis to each message in a particular channel 
     if message.channel.id == 1191356341885878302:
         emojis = ['<:blobbeat:1206994557137326110>', '\<:catKing:1206994563567452220>', '<:AC:1206994544306954313>', '<:ghosthug:1206994583578349598>', '\<:gigachad:1206994586636001281>', '\<:hype:1206994599885672519>', '\<:pkinglove:1206994630600818748>', '\<:prayge:1206994633305882686>', '<:proud:1206994636560670720>', '\<:redHandWin:1206994645016518656>', '\<:sir:1206994677644001361>', '\<:stickManLove:1206994683516157953>', '\<:yay:1206994703115886593>', '\<:yayy:1206994707020914719>', '\<:yesSir:1206994714570788874>', '👋'] # 16 emojis
         emoji = random.choice(emojis)
@@ -47,18 +51,38 @@ async def on_message(message):
             print(f"Failed to add reaction: {e}")
 
 
-    # 2) Reacting with "orz" emoji 
+
+    ### 2) Reacting with "orz" emoji 
+    orz_emoji = '<:orz:1206994621360504852>'
     # Check if "orz" is in the message content
     if "orz" in message.content.lower():  # This makes it case-insensitive
-        custom_emoji = '<:orz:1206994621360504852>'
             
         try:
-            await message.add_reaction(custom_emoji)
+            await message.add_reaction(orz_emoji)
+        except discord.HTTPException as e:
+            print(f"Failed to add reaction: {e}")
+
+    # Add orz reaction emoji to orz emoji 
+    specific_emoji_pattern = r'<:orz:\d+>'
+    if re.search(specific_emoji_pattern, message.content):
+
+        try:
+            await message.add_reaction(orz_emoji)
+        except discord.HTTPException as e:
+            print(f"Failed to add reaction: {e}")
+
+    # Add orz reaction emoji to 🛐
+    required_emoji = '🛐'
+    if required_emoji in message.content:
+        try:
+            await message.add_reaction(orz_emoji)
         except discord.HTTPException as e:
             print(f"Failed to add reaction: {e}")
 
 
-    # 3) Reacting with "✅" to notification msgs 
+
+
+    ### 3) Reacting with "✅" to notification msgs 
     if message.channel.id == 1206991455164440647:
         try:
             await message.add_reaction('✅')  
@@ -66,7 +90,8 @@ async def on_message(message):
             print(f"Failed to add reaction: {e}")
 
 
-    # 4)  Discord invite link pattern
+
+    ### 4)  Discord invite link pattern
     DISCORD_INVITE_PATTERN = r'discord(?:\.gg|app\.com\/invite)\/[^\s\/]+?'
 
     # ID of the private channel where you want to log the invite links
