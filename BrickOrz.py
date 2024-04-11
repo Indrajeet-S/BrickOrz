@@ -15,15 +15,21 @@ intents.message_content = True  # This is the crucial part for your warning
 bot = commands.Bot(command_prefix='/', intents=intents)
 
 
-@bot.event
-async def on_ready():
-    print(f'Logged on as {bot.user}!')
 
 
+# ----------------------BOT COMMANDS code ------------------------------------
 @bot.command()
 async def testt(ctx):
     """Responds with a simple message to show the command is working."""
     await ctx.send('This is a test command!')
+
+
+
+# ----------------------BOT EVENTS code ------------------------------------
+@bot.event
+async def on_ready():
+    print(f'Logged on as {bot.user}!')
+
 
 
 # The rest of your event listeners can remain under this Bot instance
@@ -106,7 +112,7 @@ async def on_message(message):
             # Log the details of the message in the designated private channel
             log_channel = bot.get_channel(LOG_CHANNEL_ID)
             if log_channel:
-                await log_channel.send(f"User {message.author} ({message.author.id}) posted a disallowed invite link in {message.channel}: {message.content}")
+                await log_channel.send(f"User {message.author} ({message.author.id}) posted a disallowed invite link 🫣 in {message.channel}: {message.content}")
 
             # Delete the message containing the invite link
             await message.delete()
@@ -144,6 +150,25 @@ async def on_reaction_add(reaction, user):
                 embed.add_field(name="Author", value=f"{reaction.message.author.name}", inline=True)
                 embed.add_field(name="Original", value=f"[Jump to message]({reaction.message.jump_url})", inline=True)
                 await reactionboard_channel.send(embed=embed)
+
+
+
+@bot.event
+async def on_message_delete(message):
+    # Check if the message was deleted in a guild and not a DM
+    if message.guild:
+        log_channel_id = 1194697094733246464
+        log_channel = bot.get_channel(log_channel_id)
+
+        if log_channel:
+            # Format the message
+            author = message.author
+            content = message.content or "[Message had no text]"
+            response = f" Deleted message by/of **{author.name}** 🧹 :\n{content}"
+
+            # Send the message to the log channel
+            await log_channel.send(response)
+
 
 
 
