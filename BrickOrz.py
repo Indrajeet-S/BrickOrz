@@ -112,13 +112,13 @@ async def on_message(message):
             # Log the details of the message in the designated private channel
             log_channel = bot.get_channel(LOG_CHANNEL_ID)
             if log_channel:
+                # Delete the message containing the invite link
+                await message.delete()
                 # await log_channel.send(f"User {message.author} ({message.author.id}) posted a disallowed invite link 🫣 in {message.channel}: {message.content}")
                 await log_channel.send(f"User {message.author} ({message.author.id}) posted a disallowed invite link 🫣 in {message.channel}:")
 
-            # Delete the message containing the invite link
-            await message.delete()
         except discord.Forbidden:
-            print(f"Could not send a DM to {message.author.name} or post in the log channel. They might have DMs disabled for non-friends, or the bot might not have permissions.")
+            print(f"Could not send a DM to {message.author.name}. They might have DMs disabled for non-friends.")
         except discord.HTTPException as e:
             print(f"Failed to send message or log due to an HTTP exception: {e}")
 
@@ -156,6 +156,9 @@ async def on_reaction_add(reaction, user):
 
 @bot.event
 async def on_message_delete(message):
+    if message.author.bot:
+        return
+
     # Check if the message was deleted in a guild and not a DM
     if message.guild:
         log_channel_id = 1194697094733246464
