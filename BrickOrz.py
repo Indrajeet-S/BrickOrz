@@ -137,7 +137,7 @@ async def on_reaction_add(reaction, user):
         # Check if the reaction count meets or exceeds the threshold (4 or more in this case)
         if reaction.count >= 4:
             # Find the channel named "reaction-board" in the server
-            reactionboard_channel = discord.utils.get(reaction.message.guild.channels, name="reaction-board")
+            reactionboard_channel = discord.utils.get(reaction.message.guild.channels, name="⚡︱reaction-board")
             if reactionboard_channel:
                 # Prepare the message to send to the reaction-board channel
                 embed = discord.Embed(description=reaction.message.content, color=0xffac33)
