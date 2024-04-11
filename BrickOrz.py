@@ -112,7 +112,8 @@ async def on_message(message):
             # Log the details of the message in the designated private channel
             log_channel = bot.get_channel(LOG_CHANNEL_ID)
             if log_channel:
-                await log_channel.send(f"User {message.author} ({message.author.id}) posted a disallowed invite link 🫣 in {message.channel}: {message.content}")
+                # await log_channel.send(f"User {message.author} ({message.author.id}) posted a disallowed invite link 🫣 in {message.channel}: {message.content}")
+                await log_channel.send(f"User {message.author} ({message.author.id}) posted a disallowed invite link 🫣 in {message.channel}:")
 
             # Delete the message containing the invite link
             await message.delete()
