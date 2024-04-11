@@ -106,14 +106,14 @@ async def on_message(message):
     # Check for Discord invite links in the message
     if re.search(DISCORD_INVITE_PATTERN, message.content, re.IGNORECASE):
         try:
+            # Delete the message containing the invite link
+            await message.delete()
             # Send a warning message directly to the user, including the server name and an emoji
             await message.author.send(f"Hello {message.author.name}, 🚫 posting other Discord server invites is not allowed in '{message.guild.name}'! If the invite link is very important then you can send it to the respective person in DM & not here on the server 😳 ")
 
             # Log the details of the message in the designated private channel
             log_channel = bot.get_channel(LOG_CHANNEL_ID)
             if log_channel:
-                # Delete the message containing the invite link
-                await message.delete()
                 # await log_channel.send(f"User {message.author} ({message.author.id}) posted a disallowed invite link 🫣 in {message.channel}: {message.content}")
                 await log_channel.send(f"User {message.author} ({message.author.id}) posted a disallowed invite link 🫣 in {message.channel}:")
 
