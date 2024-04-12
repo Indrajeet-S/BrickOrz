@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import random
 import re
-from dtoken import BOT_TOKEN
+from config import BOT_TOKEN, WELCOME_CHANNEL_ID, NOTIFICATION_CHANNEL_ID, LOG_CHANNEL_ID, EMOJI_BOARD_CHANNEL_NAME
 
 
 # Required intents for bot
@@ -43,7 +43,8 @@ async def on_message(message):
     # print(f'Message from {message.author}: {message.content}')
 
     ### 1) Random welcome reaction emojis to each message in a particular channel 
-    if message.channel.id == 1191356341885878302:
+    if message.channel.id == WELCOME_CHANNEL_ID:
+        # Add your emoji's here
         emojis = ['<:blobbeat:1206994557137326110>', '\<:catKing:1206994563567452220>', '<:AC:1206994544306954313>', '<:ghosthug:1206994583578349598>', '\<:gigachad:1206994586636001281>', '\<:hype:1206994599885672519>', '\<:pkinglove:1206994630600818748>', '\<:prayge:1206994633305882686>', '<:proud:1206994636560670720>', '\<:redHandWin:1206994645016518656>', '\<:sir:1206994677644001361>', '\<:stickManLove:1206994683516157953>', '\<:yay:1206994703115886593>', '\<:yayy:1206994707020914719>', '\<:yesSir:1206994714570788874>', '👋'] # 16 emojis
         emoji = random.choice(emojis)
 
@@ -85,7 +86,7 @@ async def on_message(message):
 
 
     ### 3) Reacting with "✅" to notification msgs 
-    if message.channel.id == 1206991455164440647:
+    if message.channel.id == NOTIFICATION_CHANNEL_ID:
         try:
             await message.add_reaction('✅')  
         except discord.HTTPException as e:
@@ -94,10 +95,7 @@ async def on_message(message):
 
 
     ### 4)  Discord invite link pattern
-    DISCORD_INVITE_PATTERN = r'discord(?:\.gg|app\.com\/invite)\/[^\s\/]+?'
-
-    # ID of the private channel where we want to log the invite links
-    LOG_CHANNEL_ID = 1194697094733246464 
+    DISCORD_INVITE_PATTERN = r'discord(?:\.gg|app\.com\/invite)\/[^\s\/]+?'    
 
     # Check for Discord invite links in the message
     if re.search(DISCORD_INVITE_PATTERN, message.content, re.IGNORECASE):
@@ -142,7 +140,7 @@ async def on_reaction_add(reaction, user):
         # Check if the reaction count meets or exceeds the threshold (4 or more in this case)
         if reaction.count >= 4:
             # Find the channel named "reaction-board" in the server
-            reactionboard_channel = discord.utils.get(reaction.message.guild.channels, name="⚡︱reaction-board")
+            reactionboard_channel = discord.utils.get(reaction.message.guild.channels, name=EMOJI_BOARD_CHANNEL_NAME)
             if reactionboard_channel:
                 # Prepare the message to send to the reaction-board channel
                 embed = discord.Embed(description=reaction.message.content, color=0xffac33)
@@ -159,8 +157,7 @@ async def on_message_delete(message):
 
     # Check if the message was deleted in a guild and not a DM
     if message.guild:
-        log_channel_id = 1194697094733246464
-        log_channel = bot.get_channel(log_channel_id)
+        log_channel = bot.get_channel(LOG_CHANNEL_ID)
 
         if log_channel:
             # Format the message
