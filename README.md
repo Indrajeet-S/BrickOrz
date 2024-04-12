@@ -4,12 +4,12 @@ Brick Orz is a Discord bot, built for delight and fun (Active development). Soon
 
 ## Functionalities
 
-- **Orz reaction**
-- **Deleted message log**
-- **69 importance**
-- **Emoji's reaction board**
-- **Discord invite link blocker**
-- **Random welcome emoji**
+- **Orz reaction**: When "orz" word in a message is detected
+- **Deleted message log**: The user's deleted messages get monitored. 
+- **69 importance**: Using the "!69" command, importance would be shown 
+- **Emoji's reaction board**: When a threshold limit of any reacted emoji is exceeded then that message is shown in this channel.
+- **Discord invite link blocker**: Prevents from spammers and unwanted things.
+- **Random welcome emoji**: Greetings. 
 
 ## Installation
 
