@@ -5,7 +5,7 @@ Brick Orz is a Discord bot, built for delight and fun (Active development). Soon
 ## Functionalities
 
 - **Orz reaction**
-- **Delete message log**
+- **Deleted message log**
 - **69 importance**
 - **Emoji's reaction board**
 - **Discord invite link blocker**
