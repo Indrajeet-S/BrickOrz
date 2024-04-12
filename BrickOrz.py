@@ -97,6 +97,9 @@ async def on_message(message):
     ### 4)  Discord invite link pattern
     DISCORD_INVITE_PATTERN = r'discord(?:\.gg|app\.com\/invite)\/[^\s\/]+?'    
 
+    # https://discord.com/invite/tgJkhqwd9Z   --> Can't delete (will add code afterwords) 
+    # https://discord.gg/8jrc5QEt             --> Delete
+
     # Check for Discord invite links in the message
     if re.search(DISCORD_INVITE_PATTERN, message.content, re.IGNORECASE):
         try:
@@ -163,7 +166,9 @@ async def on_message_delete(message):
             # Format the message
             author = message.author
             content = message.content or "[Message had no text]"
-            response = f" Deleted message by/of **{author.name}** 🧹 :\n{content}"
+            # Escape mentions of @everyone and @here to avoid pings
+            escaped_content = content.replace("@everyone", "@\u200beveryone").replace("@here", "@\u200bhere")
+            response = f"Deleted message by/of **{author.name}** 🧹 :\n{escaped_content}"
 
             # Send the message to the log channel
             await log_channel.send(response)

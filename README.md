@@ -19,9 +19,13 @@ Clone the repository
 https://github.com/Indrajeet-S/Brick-Orz.git
 ```
 
-Enter the below-required variables into the 'dtoken.py' file. 
+Enter the below-required variables into the 'config.py' file. 
 
 - **BOT_TOKEN**: The Discord Bot Token for your bot.
+- **WELCOME_CHANNEL_ID**:  
+- **NOTIFICATION_CHANNEL_ID**: 
+- **LOG_CHANNEL_ID**:  To log various activites. 
+- **EMOJI_BOARD_CHANNEL_NAME**: Where you want racted emoji's messages.
 
 To start Brick Orz just run:
 
