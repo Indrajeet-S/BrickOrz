@@ -146,7 +146,7 @@ async def on_reaction_add(reaction, user):
             # Check if the message has not been handled yet
             if reaction.message.id not in sent_messages:
                 # Find the channel named "reaction-board" in the server
-                reactionboard_channel = discord.utils.get(reaction.message.guild.channels, name='reaction-board')
+                reactionboard_channel = discord.utils.get(reaction.message.guild.channels, name=EMOJI_BOARD_CHANNEL_NAME)
                 if reactionboard_channel:
                     # Prepare the message to send to the reaction-board channel
                     embed = discord.Embed(description=reaction.message.content, color=0xffac33)
