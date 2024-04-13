@@ -142,7 +142,7 @@ async def on_reaction_add(reaction, user):
     # Check if the reaction is not from a bot
     if not user.bot:
         # Check if the reaction count meets or exceeds the threshold (4 or more in this case)
-        if reaction.count >= 4:
+        if reaction.count >= 3:
             # Check if the message has not been handled yet
             if reaction.message.id not in sent_messages:
                 # Find the channel named "reaction-board" in the server
