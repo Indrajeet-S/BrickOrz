@@ -4,7 +4,7 @@ Brick Orz is a Discord bot, built for delight and fun (Active development). Soon
 
 ## Functionalities
 
-- **Orz reaction**: When "orz" word in a message is detected
+- **Orz reaction**: When "orz" word in a message is detected.
 - **Deleted message log**: The user's deleted messages get monitored. 
 - **69 importance**: Using the "!69" command, importance would be shown 
 - **Emoji's reaction board**: When a threshold limit of any reacted emoji is exceeded then that message is shown in this channel.
@@ -25,7 +25,7 @@ Enter the below-required variables into the 'config.py' file.
 - **WELCOME_CHANNEL_ID**:  
 - **NOTIFICATION_CHANNEL_ID**: 
 - **LOG_CHANNEL_ID**:  To log various activites. 
-- **EMOJI_BOARD_CHANNEL_NAME**: Where you want racted emoji's messages.
+- **REACTION_BOARD_CHANNEL_NAME**: Where you want racted emoji's messages.
 
 To start Brick Orz just run:
 
