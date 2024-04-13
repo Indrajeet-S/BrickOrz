@@ -134,6 +134,8 @@ async def on_message(message):
 
 
 
+
+sent_messages = set()
 # Send the msg to reaction-board when one emoji's reaction count reaches >=4
 @bot.event
 async def on_reaction_add(reaction, user):
@@ -141,14 +143,19 @@ async def on_reaction_add(reaction, user):
     if not user.bot:
         # Check if the reaction count meets or exceeds the threshold (4 or more in this case)
         if reaction.count >= 4:
-            # Find the channel named "reaction-board" in the server
-            reactionboard_channel = discord.utils.get(reaction.message.guild.channels, name=EMOJI_BOARD_CHANNEL_NAME)
-            if reactionboard_channel:
-                # Prepare the message to send to the reaction-board channel
-                embed = discord.Embed(description=reaction.message.content, color=0xffac33)
-                embed.add_field(name="Author", value=f"{reaction.message.author.name}", inline=True)
-                embed.add_field(name="Original", value=f"[Jump to message]({reaction.message.jump_url})", inline=True)
-                await reactionboard_channel.send(embed=embed)
+            # Check if the message has not been handled yet
+            if reaction.message.id not in sent_messages:
+                # Find the channel named "reaction-board" in the server
+                reactionboard_channel = discord.utils.get(reaction.message.guild.channels, name='reaction-board')
+                if reactionboard_channel:
+                    # Prepare the message to send to the reaction-board channel
+                    embed = discord.Embed(description=reaction.message.content, color=0xffac33)
+                    embed.add_field(name="Author", value=f"{reaction.message.author.name}", inline=True)
+                    embed.add_field(name="Original", value=f"[Jump to message]({reaction.message.jump_url})", inline=True)
+                    await reactionboard_channel.send(embed=embed)
+                    # Add the message ID to the set to avoid future duplicates
+                    sent_messages.add(reaction.message.id)
+
 
 
 
