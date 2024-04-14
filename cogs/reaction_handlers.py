@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from config import EMOJI_BOARD_CHANNEL_NAME
+from config import REACTION_BOARD_CHANNEL_NAME
 
 
 class ReactionHandlers(commands.Cog):
@@ -14,9 +14,9 @@ class ReactionHandlers(commands.Cog):
             return
 
         if reaction.count >= 3:
-            reaction_board_channel = discord.utils.get(reaction.message.guild.channels, name=EMOJI_BOARD_CHANNEL_NAME)
+            reaction_board_channel = discord.utils.get(reaction.message.guild.channels, name=REACTION_BOARD_CHANNEL_NAME)
             if not reaction_board_channel:
-                print(f"Channel not found: {EMOJI_BOARD_CHANNEL_NAME}")
+                print(f"Channel not found: {REACTION_BOARD_CHANNEL_NAME}")
                 return
 
             embed = discord.Embed(description=reaction.message.content, color=0xffac33)
