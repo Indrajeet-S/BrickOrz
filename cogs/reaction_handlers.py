@@ -13,7 +13,7 @@ class ReactionHandlers(commands.Cog):
         if user.bot or reaction.message.id in self.sent_messages:
             return
 
-        if reaction.count >= 3:
+        if reaction.count >= 6:
             reaction_board_channel = discord.utils.get(reaction.message.guild.channels, name=REACTION_BOARD_CHANNEL_NAME)
             if not reaction_board_channel:
                 print(f"Channel not found: {REACTION_BOARD_CHANNEL_NAME}")
