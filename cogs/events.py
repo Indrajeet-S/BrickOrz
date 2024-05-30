@@ -1,5 +1,6 @@
 from discord.ext import commands
 from config import LOG_CHANNEL_ID
+import discord
 
 class Events(commands.Cog):
     def __init__(self, bot):
@@ -8,6 +9,7 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print(f'Logged on as {self.bot.user}!')
+        await self.bot.change_presence(activity=discord.CustomActivity(name='QBit'))
 
     @commands.Cog.listener()
     async def on_message_delete(self, message):
