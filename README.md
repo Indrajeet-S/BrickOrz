@@ -30,5 +30,5 @@ Enter the below-required variables into the 'config.py' file.
 To start Brick Orz just run:
 
 ```bash
-python3 BrickOrz.py
+python3 main.py
 ```
